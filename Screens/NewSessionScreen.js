@@ -2,7 +2,8 @@ import React from 'react'
 import { StyleSheet, View, Button, TouchableOpacity, Image, Text } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/AntDesign';
-import InputNumber from './InputNumber'
+import InputNumber from '../Components/InputNumber'
+
 
 const defaultPlaceholders = ["Minimum", "Moyenne", "Maximum"];
 
@@ -92,27 +93,42 @@ class NewSession extends React.Component {
     this._setValue(id, text);
     switch (this.state.checked.toString()) {
       case 'true,false,true':
-        if (this.state.values[0]=='' || this.state.values[2]=='' || this._getValue(0) > this._getValue(2)) {
-          this._setPlaceholder(1, defaultPlaceholders[1]);
+        if (
+            this.state.values[0]=='' ||
+            this.state.values[2]=='' ||
+            this._getValue(0) > this._getValue(2) ||
+            (this._getValue(0)+this._getValue(2))/2 < 0
+          ) {
+          this._setPlaceholder(1, defaultPlaceholders[1])
         }
         else {
           this._setPlaceholder(1, ((this._getValue(0)+this._getValue(2))/2).toString());
         }
       break;
       case 'true,true,false':
-        if (this.state.values[0]=='' || this.state.values[1]=='' || this._getValue(0) > this._getValue(1)) {
+        if (
+            this.state.values[0]=='' ||
+            this.state.values[1]=='' ||
+            this._getValue(0) > this._getValue(1) ||
+            this.state.values[1]*2-this.state.values[0] < 0
+          ) {
           this._setPlaceholder(2, defaultPlaceholders[2]);
         }
         else {
-          this._setPlaceholder(2, ((this.state.values[1]*2-this.state.values[0])).toString());
+          this._setPlaceholder(2, (this.state.values[1]*2-this.state.values[0]).toString());
         }
       break;
       case 'false,true,true':
-        if (this.state.values[1]=='' || this.state.values[2]=='' || this._getValue(1) > this._getValue(2)) {
+        if (
+            this.state.values[1]=='' ||
+            this.state.values[2]=='' ||
+            this._getValue(1) > this._getValue(2) ||
+            this.state.values[1]*2-this.state.values[2] < 0
+          ) {
           this._setPlaceholder(0, defaultPlaceholders[0]);
         }
         else {
-          this._setPlaceholder(0, ((this.state.values[1]*2-this.state.values[2])).toString());
+          this._setPlaceholder(0, (this.state.values[1]*2-this.state.values[2]).toString());
         }
       break;
     }
@@ -163,7 +179,11 @@ class NewSession extends React.Component {
             />
           </View>
         </View>
-        <View style={{ flex:1, backgroundColor: 'skyblue' }}>
+        <View style={styles.footer}>
+          <View style={styles.jauge}>
+            <View style={{ flex:0.5, backgroundColor: '#208bdc', marginTop: '60%'}}>
+            </View>
+          </View>
         </View>
       </View>
     );
@@ -189,6 +209,18 @@ const styles = StyleSheet.create({
   },
   unchecked: {
     flexDirection: 'row',
+  },
+  footer: {
+    flex:1,
+    backgroundColor: 'skyblue',
+    paddingLeft: '11.3%',
+    paddingVertical: '5%',
+  },
+  jauge: {
+    flex:1,
+    width: '5%',
+    backgroundColor: '#e0e0e0',
+    borderRadius: 10,
   },
 });
 

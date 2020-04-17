@@ -1,15 +1,15 @@
 import React from 'react'
 import { createAppContainer } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack'
-import MainMenu from '../Components/MainMenu'
-import NewSession from '../Components/NewSession'
+import MainMenuScreen from '../Screens/MainMenuScreen'
+import NewSessionScreen from '../Screens/NewSessionScreen'
 
 const AppNavigator = createStackNavigator({
-  MainMenu: MainMenu,
-  NewSession: NewSession,
+  MainMenu: MainMenuScreen,
+  NewSession: NewSessionScreen,
 },
 {
-  // initialRouteName: 'MainMenu'
+  initialRouteName: 'MainMenu'
 })
 
 export default createAppContainer(AppNavigator);

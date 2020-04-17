@@ -1,6 +1,7 @@
 import React from 'react'
 import { StyleSheet } from 'react-native';
 import { Input } from 'react-native-elements';
+import Settings from '../Screens/Settings';
 
 class InputNumber extends React.Component {
   constructor(props) {
@@ -21,7 +22,12 @@ class InputNumber extends React.Component {
           return;
         }
       }
-      this.setState({value: text, error: ""})
+      if (parseFloat(text) < Settings.minimum || parseFloat(text) > Settings.maximum ) {
+        var err = "Veuillez entrer un nombre entre " + Settings.minimum + " et " + Settings.maximum + ",\nou changer le système de notation"
+        this.setState({error: err})
+        return;
+      }
+      this.setState({value: text, error: ''})
     }
     else {
       this.setState({value: this.props.value, error: ''})
